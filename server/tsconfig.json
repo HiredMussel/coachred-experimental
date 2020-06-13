@@ -1,0 +1,14 @@
+{
+    "include":[
+        "./src/**/*.ts"
+    ],
+    "exclude":[
+        "./src/interfaces/*.ts"
+    ],
+    "compilerOptions" : {
+        "noImplicitAny" : true,
+        "module": "commonjs",
+        "target" : "es6",
+        "lib": ["es6"]
+    }
+}
