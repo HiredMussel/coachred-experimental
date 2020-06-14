@@ -3,7 +3,7 @@ var gulp = require('gulp')
 
 var ts = require('gulp-typescript')
 // variable pointing to compiler with settings defined in tsconfig.json
-var tsproject = ts.createProject('tsconfig.json')
+var tsproject = ts.createProject('./tsconfig.json')
 
 // Set up gulp to recognise the Babel JS transpiler
 function compileTS(cb) {

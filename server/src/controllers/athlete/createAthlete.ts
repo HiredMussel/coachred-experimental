@@ -24,29 +24,42 @@ export async function createAthlete(req: express.Request, res: express.Response)
             }, process.env.SECRET, {
                 expiresIn: 1800 // expires in 30 minutes
             });
+
+            let athlete = new AthleteModel(athleteToCreate);
+
+            athlete.save().then(() => {
+                const response: RestResponse = {
+                    status: 'ok',
+                    message: 'coach successfully created',
+                    data: {}
+                };
+
+                return res.status(200).json(response);
+            }).catch(err => {
+                const response: RestResponse = {
+                    status: 'fail',
+                    message: 'invalid data',
+                    data: {
+                        error: err
+                    }
+                }
+
+                return res.status(400).json(response);
+            });
+
         });
-
-        let athlete = new AthleteModel(athleteToCreate);
-
-        athlete.save();
-
-        const response: RestResponse = {
-            status: 'ok',
-            message: 'coach successfully created',
-            data: {}
-        };
-
-        res.status(200).json(response);
 
     } catch(err) {
 
-        res.status(500).json({
+        const response: RestResponse = {
             status: 'fail',
             message: 'server error',
             data: {
                 error: err
             }
-        });
+        };
+
+        return res.status(500).json(response);
 
     }
 }

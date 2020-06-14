@@ -9,7 +9,7 @@ const athleteProperties = {
     lastName: {type: String, required: true},
 
     phone: {type: String, required: true},
-    dateOfBirth: {type: String, required: true},
+    dateOfBirth: {type: Date, required: true},
 
     // Information about this user as an athlete
     yearsExperience: Number,
