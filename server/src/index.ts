@@ -14,12 +14,15 @@ import https = require('https');
 import path = require('path');
 
 // import helper scripts to register middleware and routes
-import { middleware } from './app/middleware'
-import { routes } from './app/routes'
+import { middleware } from './app/middleware';
+import { routes } from './app/routes';
 
 // import any required interfaces
-import { SSLCredentials } from './interfaces/SSLCredentials'
-import { compare } from 'bcrypt';
+import { SSLCredentials } from './interfaces/SSLCredentials';
+
+// import the database. Constant declaration is required to avoid import elision
+import { db } from './app/db';
+const Database = db;
 
 // create our express application
 const app : express.Application = express();
