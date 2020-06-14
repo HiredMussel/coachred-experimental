@@ -13,6 +13,6 @@ export function routes(app : express.Application) {
         res.send('Hello World!');
     });
 
-    // Athlete creation routes
+    // Athlete routes
     app.post('/athlete', createAthlete);
 }
