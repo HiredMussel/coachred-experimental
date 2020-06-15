@@ -4,6 +4,9 @@ import cors = require('cors');
 
 // Import required controllers for routes to work
 import { createAthlete } from '../controllers/athlete/createAthlete';
+import { deleteAthlete } from '../controllers/athlete/deleteAthlete';
+import { readAthlete } from '../controllers/athlete/readAthlete';
+import { loginAthlete } from '../controllers/athlete/loginAthlete';
 
 export function routes(app : express.Application) {
     // Handle CORS preflight request
@@ -15,4 +18,7 @@ export function routes(app : express.Application) {
 
     // Athlete routes
     app.post('/athlete', createAthlete);
+    app.delete('/athlete', deleteAthlete);
+    app.get('/athlete', readAthlete);
+    app.post('/athlete/login', loginAthlete);
 }

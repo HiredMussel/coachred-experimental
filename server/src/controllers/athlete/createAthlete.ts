@@ -8,6 +8,15 @@ import { AthleteInterface } from '../../interfaces/AthleteInterface';
 import { RestResponse } from '../../interfaces/RestResponse';
 
 export async function createAthlete(req: express.Request, res: express.Response) {
+    if(await AthleteModel.findOne({email: req.body.email})) {
+        const response: RestResponse = {
+            status: 'fail',
+            message: 'email already registered',
+            data: {}
+        }
+
+        return res.status(400).json(response);
+    }
 
     try {    
         
@@ -20,7 +29,7 @@ export async function createAthlete(req: express.Request, res: express.Response)
 
             athleteToCreate.token = jsonWebToken.sign({
                 email: athleteToCreate.email, 
-                password: athleteToCreate.password
+                salt: Math.random()
             }, process.env.SECRET, {
                 expiresIn: 1800 // expires in 30 minutes
             });
@@ -30,7 +39,7 @@ export async function createAthlete(req: express.Request, res: express.Response)
             athlete.save().then(() => {
                 const response: RestResponse = {
                     status: 'ok',
-                    message: 'coach successfully created',
+                    message: 'athlete successfully created',
                     data: {}
                 };
 
@@ -39,9 +48,7 @@ export async function createAthlete(req: express.Request, res: express.Response)
                 const response: RestResponse = {
                     status: 'fail',
                     message: 'invalid data',
-                    data: {
-                        error: err
-                    }
+                    data: {}
                 }
 
                 return res.status(400).json(response);
@@ -54,9 +61,7 @@ export async function createAthlete(req: express.Request, res: express.Response)
         const response: RestResponse = {
             status: 'fail',
             message: 'server error',
-            data: {
-                error: err
-            }
+            data: {}
         };
 
         return res.status(500).json(response);

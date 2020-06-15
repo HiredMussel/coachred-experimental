@@ -1,6 +1,7 @@
 import express = require('express');
 import expressMongoSanitize = require('express-mongo-sanitize');
 import bodyParser = require('body-parser');
+import { verifyAthlete } from '../controllers/athlete/checkAthleteLogin';
 
 export function middleware(app : express.Application) {
     app.use(bodyParser.json());
@@ -12,4 +13,7 @@ export function middleware(app : express.Application) {
         res.header('Access-Control-Allow-Credentials', 'true')
         next();
     });
+
+    // Operations requiring the user to be logged in as an Athlete
+    app.delete('/athlete',verifyAthlete);
 }
