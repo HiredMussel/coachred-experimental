@@ -6,6 +6,7 @@ const database: string = process.env.DB_NAME;
 class Database {
     constructor() {
         this._connect();
+        this._configure();
     }
 
     _connect() {
@@ -17,6 +18,10 @@ class Database {
         }).catch(err => {
             console.error(`Error connecting to database: ${err}`);
         });
+    }
+
+    _configure() {
+        mongoose.set('useFindAndModify', false);
     }
 }
 

@@ -16,4 +16,6 @@ export function middleware(app : express.Application) {
 
     // Operations requiring the user to be logged in as an Athlete
     app.delete('/athlete',verifyAthlete);
+    app.put('/athlete',verifyAthlete);
+    app.get('/athlete',verifyAthlete);
 }

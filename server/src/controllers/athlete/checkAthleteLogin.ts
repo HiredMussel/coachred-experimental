@@ -25,7 +25,6 @@ export async function verifyAthlete(req: express.Request, res: express.Response,
             return res.status(403).json(response);
         }
         try {
-            console.log(athlete);
             const tokenData: any = jsonWebToken.verify(bearerToken, process.env.SECRET);
             const newToken = jsonWebToken.sign({
                 email: tokenData.email,
