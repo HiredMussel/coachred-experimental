@@ -21,7 +21,8 @@ export function middleware(app : express.Application) {
     app.put('/athlete',verifyAthlete);
     app.get('/athlete',verifyAthlete);
 
-    // Operations not requiring authentication, but which nonetheless constitute interaction with the API
+    // Operations not requiring authentication, but which nonetheless constitute interaction with the API and should
+    // therefore prevent a time-out
     app.get('/coach',refreshAthleteLogin);
     app.get('/coach/:id',refreshAthleteLogin);
 
