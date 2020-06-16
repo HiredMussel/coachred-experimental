@@ -10,7 +10,11 @@ export async function loginAthlete(req: express.Request, res: express.Response) 
     const loginForm = req.body;
 
     try {
-        const athlete: any = await AthleteModel.findOne({email: loginForm.email}).select('+password +salt +token');
+        const athlete: any = await AthleteModel.findOne({
+            email: loginForm.email, 
+            deleted: false
+        }).select('+password +salt +token');
+        
         if (!athlete) {
             const response: RestResponse = {
                 status: 'fail',

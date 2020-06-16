@@ -20,5 +20,9 @@ export interface CoachInterface {
     // Security information will not always be returned
     token: string | null,
     salt: string | null,
-    password: string | null
+    password: string | null,
+
+    deleted: boolean,
+
+    timeSlots: Array<any>
 }

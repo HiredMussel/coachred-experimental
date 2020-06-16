@@ -31,6 +31,8 @@ const coachProperties = {
     salt: {type: String, required: true, select: false},
     password: {type: String, required: true, select: false},
 
+    deleted: {type: Boolean, required: true},
+
     // Data about available time slots
     timeSlots: [
         {

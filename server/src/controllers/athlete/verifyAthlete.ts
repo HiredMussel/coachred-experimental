@@ -15,7 +15,7 @@ export async function verifyAthlete(req: express.Request, res: express.Response,
         res.status(403).json(response);
     }
     const bearerToken = req.header('Authorization').split(' ')[1];
-    AthleteModel.findOne({token: bearerToken}).then((athlete: any) => {
+    AthleteModel.findOne({token: bearerToken, deleted: false}).then((athlete: any) => {
         if (!athlete) {
             const response: RestResponse = {
                 status: 'fail',

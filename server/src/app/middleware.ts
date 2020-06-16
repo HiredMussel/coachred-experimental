@@ -1,7 +1,7 @@
 import express = require('express');
 import expressMongoSanitize = require('express-mongo-sanitize');
 import bodyParser = require('body-parser');
-import { verifyAthlete } from '../controllers/athlete/checkAthleteLogin';
+import { verifyAthlete } from '../controllers/athlete/verifyAthlete';
 import { refreshAthleteLogin } from '../controllers/athlete/refreshAthleteLogin';
 
 export function middleware(app : express.Application) {
@@ -20,6 +20,8 @@ export function middleware(app : express.Application) {
     app.put('/athlete',verifyAthlete);
     app.get('/athlete',verifyAthlete);
 
-    //Operations should refresh the login of the user if they happen to be logged in already
-    app.use('/', refreshAthleteLogin);
+    //Operations not requiring authentication, but which nonetheless constitute interaction with the API
+    app.get('/coach',refreshAthleteLogin);
+    app.get('/coach/:id',refreshAthleteLogin);
+
 }

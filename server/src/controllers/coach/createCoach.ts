@@ -6,6 +6,7 @@ import jsonWebToken = require('jsonwebtoken');
 import { CoachModel } from '../../models/CoachModel';
 import { CoachInterface } from '../../interfaces/CoachInterface';
 import { RestResponse } from '../../interfaces/RestResponse';
+import { validateCoach } from '../../validators/validateCoach';
 
 export async function createCoach(req: express.Request, res: express.Response) {
     if(await CoachModel.findOne({email: req.body.email})) {
@@ -17,54 +18,68 @@ export async function createCoach(req: express.Request, res: express.Response) {
 
         return res.status(400).json(response);
     }
+    
+    if (await validateCoach(req.body)) {
+        try {    
+            
+            let coachToCreate: CoachInterface = req.body;
 
-    try {    
-        
-        let athleteToCreate: CoachInterface = req.body;
+            coachToCreate.deleted = false;
 
-        athleteToCreate.salt = await bCrypt.genSalt();
+            coachToCreate.timeSlots = [];
 
-        bCrypt.hash(athleteToCreate.password, athleteToCreate.salt, (err: Error, hash: string) => {
-            athleteToCreate.password = hash;
+            coachToCreate.salt = await bCrypt.genSalt();
 
-            athleteToCreate.token = jsonWebToken.sign({
-                email: athleteToCreate.email, 
-                salt: Math.random()
-            }, process.env.SECRET, {
-                expiresIn: 1800 // expires in 30 minutes
+            bCrypt.hash(coachToCreate.password, coachToCreate.salt, (err: Error, hash: string) => {
+                coachToCreate.password = hash;
+
+                coachToCreate.token = jsonWebToken.sign({
+                    email: coachToCreate.email, 
+                    salt: Math.random()
+                }, process.env.SECRET, {
+                    expiresIn: 1800 // expires in 30 minutes
+                });
+
+                let athlete = new CoachModel(coachToCreate);
+
+                athlete.save().then(() => {
+                    const response: RestResponse = {
+                        status: 'ok',
+                        message: 'coach successfully created',
+                        data: {}
+                    };
+
+                    return res.status(200).json(response);
+                }).catch(err => {
+                    const response: RestResponse = {
+                        status: 'fail',
+                        message: 'invalid data - invalid format for database entry',
+                        data: {}
+                    }
+                    console.log(err);
+
+                    return res.status(400).json(response);
+                });
+
             });
+        } catch(err) {
 
-            let athlete = new CoachModel(athleteToCreate);
+            const response: RestResponse = {
+                status: 'fail',
+                message: 'server error',
+                data: {}
+            };
 
-            athlete.save().then(() => {
-                const response: RestResponse = {
-                    status: 'ok',
-                    message: 'athlete successfully created',
-                    data: {}
-                };
+            return res.status(500).json(response);
 
-                return res.status(200).json(response);
-            }).catch(err => {
-                const response: RestResponse = {
-                    status: 'fail',
-                    message: 'invalid data',
-                    data: {}
-                }
-
-                return res.status(400).json(response);
-            });
-
-        });
-
-    } catch(err) {
-
+        }
+    } else {
         const response: RestResponse = {
             status: 'fail',
-            message: 'server error',
+            message: 'invalid data - data validation failed',
             data: {}
-        };
+        }
 
-        return res.status(500).json(response);
-
+        return res.status(400).json(response);
     }
 }
