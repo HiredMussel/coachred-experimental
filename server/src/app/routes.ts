@@ -16,6 +16,8 @@ import { loginCoach } from '../controllers/coach/loginCoach';
 import { updateCoach } from '../controllers/coach/updateCoach';
 import { deleteCoach } from '../controllers/coach/deleteCoach';
 
+import { readAllSports } from '../controllers/sport/readAllSports';
+
 export function routes(app : express.Application) {
     // Handle CORS preflight request
     app.options('*', cors());
@@ -38,4 +40,7 @@ export function routes(app : express.Application) {
     app.post('/coach/login', loginCoach);
     app.put('/coach',updateCoach);
     app.delete('/coach',deleteCoach);
+
+    // Sport route
+    app.get('/sport', readAllSports);
 }
