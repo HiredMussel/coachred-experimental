@@ -1,7 +1,7 @@
-import mockingoose from 'mockingoose'
+import mockingoose from 'mockingoose';
 
-import { validateAthlete } from '../../validators/validateAthlete'
-import { SportModel } from '../../models/SportModel'
+import { validateAthlete } from '../../validators/validateAthlete';
+import { SportModel } from '../../models/SportModel';
 
 const testAthlete = {
     firstName: 'Test',
@@ -16,7 +16,7 @@ const testAthlete = {
     salt: 'salty',
     token: '0',
     deleted: false
-}
+};
 
 let testSportList = [{name: 'Football'}, {name: 'Cricket'}]
 mockingoose(SportModel).toReturn(testSportList, 'find')
@@ -27,8 +27,8 @@ test('correctly-formatted athlete validates', () => {
     }).catch(error => {
         console.log(error)
         fail('this test has failed')
-    })
-})
+    });
+});
 
 const wrongEmailAthlete = {
     firstName: 'Test',
@@ -43,7 +43,7 @@ const wrongEmailAthlete = {
     salt: 'salty',
     token: '0',
     deleted: false
-}
+};
 
 test('incorrectly-formatted email causes validation to fail', () => {
     validateAthlete(wrongEmailAthlete).then(validates => {
@@ -51,8 +51,8 @@ test('incorrectly-formatted email causes validation to fail', () => {
     }).catch(error => {
         console.log(error)
         fail('this test has failed')
-    })
-})
+    });
+});
 
 const wrongSportAthlete = {
     firstName: 'Test',
@@ -67,7 +67,7 @@ const wrongSportAthlete = {
     salt: 'salty',
     token: '0',
     deleted: false
-}
+};
 
 test('sport not in DB causes validation to fail', () => {
     validateAthlete(wrongSportAthlete).then(validates => {
@@ -75,8 +75,8 @@ test('sport not in DB causes validation to fail', () => {
     }).catch(error => {
         console.log(error)
         fail('this test has failed')
-    })
-})
+    });
+});
 
 const wrongDateOfBirthAthlete = {
     firstName: 'Test',
@@ -91,7 +91,7 @@ const wrongDateOfBirthAthlete = {
     salt: 'salty',
     token: '0',
     deleted: false
-}
+};
 
 test('incorrectly-formatted date of birth causes validation to fail', () => {
     validateAthlete(wrongDateOfBirthAthlete).then(validates => {
@@ -99,8 +99,8 @@ test('incorrectly-formatted date of birth causes validation to fail', () => {
     }).catch(error => {
         console.log(error)
         fail('this test has failed')
-    })
-})
+    });
+});
 
 const wrongPhoneAthlete = {
     firstName: 'Test',
@@ -115,7 +115,7 @@ const wrongPhoneAthlete = {
     salt: 'salty',
     token: '0',
     deleted: false
-}
+};
 
 test('non-numeric number of years causes validation to fail', () => {
     validateAthlete(wrongPhoneAthlete).then(validates => {
@@ -123,5 +123,5 @@ test('non-numeric number of years causes validation to fail', () => {
     }).catch(error => {
         console.log(error)
         fail('this test has failed')
-    })
-})
+    });
+});
