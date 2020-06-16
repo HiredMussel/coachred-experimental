@@ -7,7 +7,7 @@
     "test": "npm run test --prefix server",
     "server": "concurrently --kill-others-on-fail \"npm run watch --prefix server\" \"nodemon server/dist/index.js\"",
     "client": "npm run start --prefix client",
-    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "install-all": "npm install && npm install --prefix server && npm install --prefix client && npm run typescript --prefix server"
   },
   "keywords": [],
