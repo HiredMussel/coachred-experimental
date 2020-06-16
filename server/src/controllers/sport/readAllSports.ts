@@ -26,5 +26,6 @@ export async function readAllSports(req: express.Request, res: express.Response)
         };
 
         return res.status(500).json(response);
+        
     });
 }
