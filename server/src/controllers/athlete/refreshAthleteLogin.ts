@@ -22,7 +22,7 @@ export async function refreshAthleteLogin(req: express.Request, res: express.Res
                 });
                 athlete.token = newToken;
                 athlete.save().then(() => {
-                    req.headers['authorization'] = 'Bearer ' + newToken;
+                    res.locals.bearerToken = newToken;
                     next();
                 }).catch((err: any) => {
                     const response: RestResponse = {

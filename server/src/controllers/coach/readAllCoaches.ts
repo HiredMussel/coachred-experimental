@@ -5,7 +5,7 @@ import { CoachModel } from '../../models/CoachModel'
 import { RestResponse } from '../../interfaces/RestResponse';
 
 export function readAllCoaches(req: express.Request, res: express.Response) {
-    const bearerToken: string | null = (req.header('Authorization') ? req.header('Authorization').split(' ')[1] : null);
+    const bearerToken: string | null = res.locals.bearerToken;
     let searchTerm = (req.query.sport ? {sport: req.query.sport} : {});
 
     CoachModel.find(searchTerm).then(coaches => {

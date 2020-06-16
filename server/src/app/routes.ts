@@ -12,6 +12,8 @@ import { updateAthlete } from '../controllers/athlete/updateAthlete';
 import { createCoach } from '../controllers/coach/createCoach';
 import { readAllCoaches } from '../controllers/coach/readAllCoaches';
 import { readCoach } from '../controllers/coach/readCoach';
+import { loginCoach } from '../controllers/coach/loginCoach';
+import { updateCoach } from '../controllers/coach/updateCoach';
 
 export function routes(app : express.Application) {
     // Handle CORS preflight request
@@ -32,4 +34,6 @@ export function routes(app : express.Application) {
     app.post('/coach', createCoach);
     app.get('/coach', readAllCoaches);
     app.get('/coach/:id',readCoach);
+    app.post('/coach/login', loginCoach);
+    app.put('/coach',updateCoach);
 }

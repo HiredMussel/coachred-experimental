@@ -3,6 +3,7 @@ import expressMongoSanitize = require('express-mongo-sanitize');
 import bodyParser = require('body-parser');
 import { verifyAthlete } from '../controllers/athlete/verifyAthlete';
 import { refreshAthleteLogin } from '../controllers/athlete/refreshAthleteLogin';
+import { verifyCoach } from '../controllers/coach/verifyCoach';
 
 export function middleware(app : express.Application) {
     app.use(bodyParser.json());
@@ -20,8 +21,10 @@ export function middleware(app : express.Application) {
     app.put('/athlete',verifyAthlete);
     app.get('/athlete',verifyAthlete);
 
-    //Operations not requiring authentication, but which nonetheless constitute interaction with the API
+    // Operations not requiring authentication, but which nonetheless constitute interaction with the API
     app.get('/coach',refreshAthleteLogin);
     app.get('/coach/:id',refreshAthleteLogin);
 
+    // Operations requiring the user to be logged in as a Coach
+    app.put('/coach',verifyCoach);
 }

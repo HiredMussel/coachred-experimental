@@ -6,7 +6,7 @@ import { RestResponse } from '../../interfaces/RestResponse';
 
 export async function readCoach(req: express.Request, res: express.Response) {
     let coach: any = {}
-    const bearerToken: string | null = (req.header('Authorization')) ? req.header('Authorization').split(' ')[1] : null;
+    const bearerToken: string | null = res.locals.bearerToken;
 
     try {
         coach = await CoachModel.findById(req.params.id);

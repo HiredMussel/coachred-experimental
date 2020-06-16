@@ -34,7 +34,8 @@ export async function verifyAthlete(req: express.Request, res: express.Response,
             });
             athlete.token = newToken;
             athlete.save().then(() => {
-                req.headers['authorization'] = 'Bearer ' + newToken;
+                res.locals.bearerToken = newToken;
+                res.locals.athlete = athlete;
                 next();
             }).catch((err: any) => {
                 const response: RestResponse = {

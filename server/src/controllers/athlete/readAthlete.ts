@@ -5,37 +5,30 @@ import { AthleteModel } from '../../models/AthleteModel';
 import { RestResponse } from '../../interfaces/RestResponse';
 
 export async function readAthlete(req: express.Request, res: express.Response) {
-    let athlete = {}
+    const athlete = res.locals.athlete;
+    const bearerToken = res.locals.bearerToken;
 
-    try {
-        const bearerToken = req.header('Authorization').split(' ')[1];
-        athlete = await AthleteModel.findOne({token: bearerToken, deleted: false});
-        if (!athlete) {
-            const response: RestResponse = {
-                status: 'fail',
-                message: 'athlete not found',
-                data: {
-                    token: bearerToken
-                }
-            };
-            return res.status(404).json(response);
-        } else {
-            const response: RestResponse = {
-                status: 'ok',
-                message: 'athlete found successfully',
-                data: {
-                    athlete,
-                    token: bearerToken
-                },
-            };
-            return res.status(200).json(response); 
-        }
-    } catch (err) {
+    if (!athlete) {
         const response: RestResponse = {
             status: 'fail',
-            message: 'unable to resolve identification token',
-            data: {}
+            message: 'athlete not found',
+            data: {
+                token: bearerToken
+            }
         };
+
         return res.status(404).json(response);
+
+    } else {
+        const response: RestResponse = {
+            status: 'fail',
+            message: 'athlete retrieved successfully',
+            data: {
+                athlete,
+                token: bearerToken
+            }
+        };
+
+        return res.status(200).json(response);
     }
 }
