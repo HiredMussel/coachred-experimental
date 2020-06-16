@@ -2,6 +2,7 @@ import express = require('express');
 import expressMongoSanitize = require('express-mongo-sanitize');
 import bodyParser = require('body-parser');
 import { verifyAthlete } from '../controllers/athlete/checkAthleteLogin';
+import { refreshAthleteLogin } from '../controllers/athlete/refreshAthleteLogin';
 
 export function middleware(app : express.Application) {
     app.use(bodyParser.json());
@@ -18,4 +19,7 @@ export function middleware(app : express.Application) {
     app.delete('/athlete',verifyAthlete);
     app.put('/athlete',verifyAthlete);
     app.get('/athlete',verifyAthlete);
+
+    //Operations should refresh the login of the user if they happen to be logged in already
+    app.use('/', refreshAthleteLogin);
 }

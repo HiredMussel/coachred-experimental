@@ -20,7 +20,9 @@ const athleteProperties = {
     // Password and security data
     token: {type: String, required: true, select: false},
     salt: {type: String, required: true, select: false},
-    password: {type: String, required: true, select: false}
+    password: {type: String, required: true, select: false},
+
+    deleted: Boolean
 }
 
 const athleteSchema : mongoose.Schema = new mongoose.Schema(athleteProperties, {collection: 'athlete'});

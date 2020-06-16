@@ -6,12 +6,14 @@ import { RestResponse } from '../../interfaces/RestResponse';
 
 export async function deleteAthlete(req: express.Request, res: express.Response) {
     const bearerToken = req.header('Authorization').split(' ')[1];
-    AthleteModel.deleteOne({ token: bearerToken }, (err) => {
+    AthleteModel.findOneAndUpdate({ token: bearerToken }, {deleted: true}, (err) => {
         if (err) {
             const response: RestResponse = {
                 status: 'fail',
                 message: 'failed to delete athlete',
-                data: {}
+                data: {
+                    token: bearerToken
+                }
             }
 
             return res.status(500).json(response);

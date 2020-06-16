@@ -11,7 +11,10 @@ export interface AthleteInterface {
     sport: string,
     lookingFor: string,
 
+    // Security information should always exist, but will not always be accessible
     token: string | null,
     salt: string | null,
-    password: string
+    password: string | null,
+
+    deleted: boolean
 }
