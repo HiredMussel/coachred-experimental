@@ -5,12 +5,12 @@ import jsonWebToken = require('jsonwebtoken');
 import { CoachModel } from '../../models/CoachModel';
 import { RestResponse } from '../../interfaces/RestResponse';
 
-export async function refreshAthleteLogin(req: express.Request, res: express.Response, next: express.NextFunction) {
+export async function refreshCoachLogin(req: express.Request, res: express.Response, next: express.NextFunction) {
     if (req.header('Authorization')) {
         const bearerToken = req.header('Authorization').split(' ')[1];
         CoachModel.findOne({token: bearerToken}).then((coach: any) => {
             if (!coach) {
-                next();
+                return next();
             }
             try {
                 const tokenData: any = jsonWebToken.verify(bearerToken, process.env.SECRET);
@@ -23,7 +23,7 @@ export async function refreshAthleteLogin(req: express.Request, res: express.Res
                 coach.token = newToken;
                 coach.save().then(() => {
                     res.locals.bearerToken = newToken;
-                    next();
+                    return next();
                 }).catch((err: any) => {
                     const response: RestResponse = {
                         status: 'fail',
@@ -33,10 +33,10 @@ export async function refreshAthleteLogin(req: express.Request, res: express.Res
                     return res.status(500).json(response);
                 });
             } catch (err) {
-                next();
+                return next();
             }
         });
     } else {
-        next();
+        return next();
     }
 }

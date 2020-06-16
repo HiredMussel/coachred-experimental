@@ -36,7 +36,7 @@ export async function verifyAthlete(req: express.Request, res: express.Response,
             athlete.save().then(() => {
                 res.locals.bearerToken = newToken;
                 res.locals.athlete = athlete;
-                next();
+                return next();
             }).catch((err: any) => {
                 const response: RestResponse = {
                     status: 'fail',

@@ -36,7 +36,7 @@ export async function verifyCoach(req: express.Request, res: express.Response, n
             coach.save().then(() => {
                 res.locals.bearerToken = newToken;
                 res.locals.coach = coach;
-                next();
+                return next();
             }).catch((err: any) => {
                 const response: RestResponse = {
                     status: 'fail',

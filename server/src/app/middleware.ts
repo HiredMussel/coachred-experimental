@@ -4,6 +4,7 @@ import bodyParser = require('body-parser');
 import { verifyAthlete } from '../controllers/athlete/verifyAthlete';
 import { refreshAthleteLogin } from '../controllers/athlete/refreshAthleteLogin';
 import { verifyCoach } from '../controllers/coach/verifyCoach';
+import { refreshCoachLogin } from '../controllers/coach/refreshCoachLogin';
 
 export function middleware(app : express.Application) {
     app.use(bodyParser.json());
@@ -25,9 +26,14 @@ export function middleware(app : express.Application) {
     // should therefore prevent a time-out
     app.get('/coach',refreshAthleteLogin);
     app.get('/coach/:id',refreshAthleteLogin);
+    app.get('/slot/:date', refreshAthleteLogin);
 
     // Operations requiring the user to be logged in as a Coach
     app.put('/coach',verifyCoach);
     app.delete('/coach',verifyCoach);
     app.post('/slot', verifyCoach);
+
+    // Coach operations not requiring authentication, but which nonetheless constitute interaction with the API and
+    // should therefore prevent a time-out
+    app.get('/slot/:date', refreshCoachLogin);
 }

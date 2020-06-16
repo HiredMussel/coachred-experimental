@@ -19,6 +19,7 @@ import { deleteCoach } from '../controllers/coach/deleteCoach';
 import { readAllSports } from '../controllers/sport/readAllSports';
 
 import { createSlot } from '../controllers/timeSlot/createTimeSlot';
+import { readTimeSlots } from '../controllers/timeSlot/readTimeSlots';
 
 export function routes(app : express.Application) {
     // Handle CORS preflight request
@@ -45,6 +46,7 @@ export function routes(app : express.Application) {
 
     // Time Slot routes
     app.post('/slot', createSlot);
+    app.get('/slot/:date', readTimeSlots);
 
     // Sport route
     app.get('/sport', readAllSports);
