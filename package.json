@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run test --prefix server",
-    "server": "concurrently --kill-others-on-fail \"nodemon server/dist/index.js\" \"npm run watch --prefix server\"",
+    "server": "concurrently --kill-others-on-fail \"npm run watch --prefix server\" \"nodemon server/dist/index.js\"",
     "client": "npm run start --prefix client",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-    "install-all": "npm install && npm install --prefix server && npm install --prefix client"
+    "install-all": "npm install && npm install --prefix server && npm install --prefix client && npm run typescript --prefix server"
   },
   "keywords": [],
   "author": "",
