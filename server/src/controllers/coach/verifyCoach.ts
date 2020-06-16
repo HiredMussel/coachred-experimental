@@ -34,7 +34,8 @@ export async function verifyCoach(req: express.Request, res: express.Response, n
             });
             coach.token = newToken;
             coach.save().then(() => {
-                req.headers['authorization'] = 'Bearer ' + newToken;
+                res.locals.bearerToken = newToken;
+                res.locals.coach = coach;
                 next();
             }).catch((err: any) => {
                 const response: RestResponse = {
@@ -50,7 +51,7 @@ export async function verifyCoach(req: express.Request, res: express.Response, n
                 message: 'unable to validate credentials',
                 data: {}
             };
-            return res.status(403).json(response);
+            return res.status(500).json(response);
         }
     });
 }

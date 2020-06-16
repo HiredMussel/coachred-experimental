@@ -51,7 +51,7 @@ export async function verifyAthlete(req: express.Request, res: express.Response,
                 message: 'unable to validate credentials',
                 data: {}
             };
-            return res.status(403).json(response);
+            return res.status(500).json(response);
         }
     });
 }

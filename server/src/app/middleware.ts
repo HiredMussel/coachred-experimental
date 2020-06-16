@@ -27,4 +27,5 @@ export function middleware(app : express.Application) {
 
     // Operations requiring the user to be logged in as a Coach
     app.put('/coach',verifyCoach);
+    app.delete('/coach',verifyCoach);
 }

@@ -14,6 +14,7 @@ import { readAllCoaches } from '../controllers/coach/readAllCoaches';
 import { readCoach } from '../controllers/coach/readCoach';
 import { loginCoach } from '../controllers/coach/loginCoach';
 import { updateCoach } from '../controllers/coach/updateCoach';
+import { deleteCoach } from '../controllers/coach/deleteCoach';
 
 export function routes(app : express.Application) {
     // Handle CORS preflight request
@@ -36,4 +37,5 @@ export function routes(app : express.Application) {
     app.get('/coach/:id',readCoach);
     app.post('/coach/login', loginCoach);
     app.put('/coach',updateCoach);
+    app.delete('/coach',deleteCoach);
 }

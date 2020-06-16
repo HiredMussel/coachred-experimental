@@ -7,7 +7,7 @@ import { RestResponse } from '../../interfaces/RestResponse';
 const proceedWithUpdate = (bearerToken: string, req: express.Request, res: express.Response) => {
     let athlete = res.locals.athlete;
 
-    athlete.assign(req.body);
+    Object.assign(athlete, req.body);
     athlete.save().then(()=>{
         const response: RestResponse = {
             status: 'ok',
@@ -34,9 +34,10 @@ const proceedWithUpdate = (bearerToken: string, req: express.Request, res: expre
 
 export async function updateAthlete(req: express.Request, res: express.Response) {
     const bearerToken = res.locals.bearerToken;
-    if (req.body.password) {
+    if (req.body.password || req.body.salt || req.body.token) {
         try {
             req.body.salt = await bCrypt.genSalt();
+            req.body.token = bearerToken;
             await bCrypt.hash(req.body.password, req.body.salt, (err, hash) => {
                 req.body.password = hash;
                 proceedWithUpdate(bearerToken, req, res);

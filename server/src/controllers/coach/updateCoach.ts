@@ -2,41 +2,43 @@ import express = require('express');
 import mongoose = require('mongoose');
 import bCrypt = require('bcrypt');
 
-import { CoachModel } from '../../models/CoachModel';
 import { RestResponse } from '../../interfaces/RestResponse';
 
 const proceedWithUpdate = (bearerToken: string, req: express.Request, res: express.Response) => {
-        CoachModel.findOneAndUpdate({ token: bearerToken},req.body, (err) => {
-        if (err) {
-            const response: RestResponse = {
-                status: 'fail',
-                message: 'failed to update coach',
-                data: {
-                    token: bearerToken
-                }
-            };
+    
+    let coach = res.locals.coach;
 
-            return res.status(500).json(response);
-            
-        } else {
-            const response: RestResponse = {
-                status: 'ok',
-                message: 'coach successfully updated',
-                data: {
-                    token: bearerToken
-                }
-            };
+    Object.assign(coach, req.body);
+    coach.save().then(()=>{
+        const response: RestResponse = {
+            status: 'ok',
+            message: 'updated coach information successfully',
+            data: {
+                token: bearerToken
+            }
+        };
 
-            return res.status(200).json(response);
-        }
-    })
+        return res.status(200).json(response);
+
+    }).catch((err: any) => {
+        const response: RestResponse = {
+            status: 'fail',
+            message: 'unable to update coach information',
+            data: {
+                token: bearerToken
+            }
+        };
+
+        return res.status(500).json(response);
+    });
 }
 
 export async function updateCoach(req: express.Request, res: express.Response) {
-    const bearerToken = req.header('Authorization').split(' ')[1];
-    if (req.body.password) {
+    const bearerToken = res.locals.bearerToken;
+    if (req.body.password || req.body.salt || req.body.token) {
         try {
             req.body.salt = await bCrypt.genSalt();
+            req.body.token = bearerToken;
             await bCrypt.hash(req.body.password, req.body.salt, (err, hash) => {
                 req.body.password = hash;
                 proceedWithUpdate(bearerToken, req, res);
