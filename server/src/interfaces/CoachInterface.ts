@@ -1,3 +1,5 @@
+import { SlotInterface } from './SlotInterface';
+
 export interface CoachInterface {
     email: string,
 
@@ -24,5 +26,5 @@ export interface CoachInterface {
 
     deleted: boolean,
 
-    timeSlots: Array<any>
+    timeSlots: Array<SlotInterface>
 }

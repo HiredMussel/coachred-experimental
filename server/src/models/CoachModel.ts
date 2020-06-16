@@ -38,7 +38,7 @@ const coachProperties = {
         {
             ageRange: {type: String, required: true},
             hourlyRate: {type: Number, required: true},
-            date: {type: String, required: true},
+            date: {type: Date, required: true},
             startTime: {type: String, required: true},
             endTime: {type: String, required: true},
             repeat: {type: String, required: true},

@@ -21,12 +21,13 @@ export function middleware(app : express.Application) {
     app.put('/athlete',verifyAthlete);
     app.get('/athlete',verifyAthlete);
 
-    // Operations not requiring authentication, but which nonetheless constitute interaction with the API and should
-    // therefore prevent a time-out
+    // Athlete operations not requiring authentication, but which nonetheless constitute interaction with the API and
+    // should therefore prevent a time-out
     app.get('/coach',refreshAthleteLogin);
     app.get('/coach/:id',refreshAthleteLogin);
 
     // Operations requiring the user to be logged in as a Coach
     app.put('/coach',verifyCoach);
     app.delete('/coach',verifyCoach);
+    app.post('/slot', verifyCoach);
 }
