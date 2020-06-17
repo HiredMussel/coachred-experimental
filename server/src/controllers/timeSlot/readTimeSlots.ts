@@ -15,7 +15,7 @@ export async function readTimeSlots (req : express.Request, res : express.Respon
     CoachModel.findById(coachId).then(async (coach: any) => {
         try {
             let timeSlots = await findSlotsByDate(coach, desiredDate);
-            timeSlots = filterForClashes(timeSlots);
+            timeSlots = filterForClashes(timeSlots, desiredDate);
             let slotsToReturn = await Promise.all(timeSlots.map(async (slot) => {
                 slot.availableFor = await findAvailability(coach, slot, desiredDate);
                 console.log(slot);

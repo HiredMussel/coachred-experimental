@@ -19,7 +19,7 @@ export async function findAvailability(coach: CoachInterface, timeSlot: SlotInte
             // times 24 hours times 7 days for the number of milliseconds in a week
             let dateToCheck = new Date(initialDate.getTime() + i*(1000*60*60*24*7));
             let slotsOnDate = await findSlotsByDate(coach, dateToCheck);
-            stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
+            stillAvailable = (filterForClashes(slotsOnDate, dateToCheck).includes(timeSlot));
             if (stillAvailable) {i++};
         }
         return i;
@@ -31,7 +31,7 @@ export async function findAvailability(coach: CoachInterface, timeSlot: SlotInte
             // times 24 hours times 14 days for the number of milliseconds in a fortnight
             let dateToCheck = new Date(initialDate.getTime() + i*(1000*60*60*24*14));
             let slotsOnDate = await findSlotsByDate(coach, dateToCheck);
-            stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
+            stillAvailable = (filterForClashes(slotsOnDate, dateToCheck).includes(timeSlot));
             if (stillAvailable) {i++};
         }
         return i;
@@ -58,7 +58,7 @@ export async function findAvailability(coach: CoachInterface, timeSlot: SlotInte
             let dayToCheck = Math.min(initialDate.getDate(), lastDay);
             let dateToCheck = new Date(yearToCheck, monthToCheck, dayToCheck);
             let slotsOnDate = await findSlotsByDate(coach, dateToCheck);
-            stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
+            stillAvailable = (filterForClashes(slotsOnDate, dateToCheck).includes(timeSlot));
             if (stillAvailable) {i++};
         }
         return i;
