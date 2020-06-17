@@ -20,7 +20,7 @@ export async function findAvailability(coach: CoachInterface, timeSlot: SlotInte
             let dateToCheck = new Date(initialDate.getTime() + i*(1000*60*60*24*7));
             let slotsOnDate = await findSlotsByDate(coach, dateToCheck);
             stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
-            i++;
+            if (stillAvailable) {i++};
         }
         return i;
     } else if (timeSlot.repeat === 'Fortnightly') {
@@ -32,7 +32,7 @@ export async function findAvailability(coach: CoachInterface, timeSlot: SlotInte
             let dateToCheck = new Date(initialDate.getTime() + i*(1000*60*60*24*14));
             let slotsOnDate = await findSlotsByDate(coach, dateToCheck);
             stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
-            i++;
+            if (stillAvailable) {i++};
         }
         return i;
     } else {
@@ -59,7 +59,7 @@ export async function findAvailability(coach: CoachInterface, timeSlot: SlotInte
             let dateToCheck = new Date(yearToCheck, monthToCheck, dayToCheck);
             let slotsOnDate = await findSlotsByDate(coach, dateToCheck);
             stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
-            i++;
+            if (stillAvailable) {i++};
         }
         return i;
     }
