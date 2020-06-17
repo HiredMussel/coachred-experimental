@@ -40,8 +40,8 @@ export async function findAvailablility(coach: CoachInterface, timeSlot: SlotInt
         let i = 1;
         let stillAvailable = true;
         while (stillAvailable && i < 10) {
-            // check the date one week into the future - 1000 milliseconds times 60 seconds times 60 minutes
-            // times 24 hours times 14 days for the number of milliseconds in a fortnight
+            // some convoluted logic has to be done here in order to check when the slot will clash with another,
+            // since we have logic in place to place a slot on the last day of the month under certain conditions
             let monthToCheck = initialDate.getMonth() + i;
             let yearToCheck = initialDate.getFullYear();
             if (monthToCheck > 11) {
