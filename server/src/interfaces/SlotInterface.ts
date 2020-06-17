@@ -5,5 +5,5 @@ export interface SlotInterface {
     startTime: string,
     endTime: string,
     repeat: string,
-    timeSlots: Array<any>
+    bookedBy: Array<any>
 }
