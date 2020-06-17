@@ -10,7 +10,6 @@ export async function createSlot(req: express.Request, res: express.Response) {
 
     if (await validateSlot(req.body)) {
         try {
-
             coach.timeSlots.push(req.body);
             coach.save().then(() => {
                 const response: RestResponse = {

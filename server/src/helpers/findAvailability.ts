@@ -8,7 +8,7 @@ import { filterForClashes } from "./filterForClashes";
 // initial date - to remove slots clashing with a booked slot on the initial date, use the filterForClashes method
 // on the time slots for the initial date. The function should be passed the parent "Coach" object in addition to 
 // the time slot object for the sake of reducing the number of database queries necessary.
-export async function findAvailablility(coach: CoachInterface, timeSlot: SlotInterface, initialDate: Date) {
+export async function findAvailability(coach: CoachInterface, timeSlot: SlotInterface, initialDate: Date) {
     if (timeSlot.repeat === 'Once') {
         return 1;
     } else if (timeSlot.repeat === 'Weekly') {
@@ -61,5 +61,6 @@ export async function findAvailablility(coach: CoachInterface, timeSlot: SlotInt
             stillAvailable = (filterForClashes(slotsOnDate).includes(timeSlot));
             i++;
         }
+        return i;
     }
 }

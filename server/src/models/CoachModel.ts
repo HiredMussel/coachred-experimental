@@ -42,6 +42,7 @@ const coachProperties = {
             startTime: {type: String, required: true},
             endTime: {type: String, required: true},
             repeat: {type: String, required: true},
+            availableFor: Number,
             bookedBy: [{
                 firstName: {type: String, required: true},
                 lastName: {type: String, required: true},
