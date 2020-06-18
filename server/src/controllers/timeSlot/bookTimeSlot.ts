@@ -23,7 +23,6 @@ export default async (req: express.Request, res: express.Response) => {
     const initialDate: Date = new Date(req.body.initialDate);
     const initialTimestamp: number = initialDate.getTime();
 
-
     CoachModel.findById(coachId).then(async (coach: any) => {
 
         const timeSlot = coach.timeSlots.id(slotId);
@@ -55,7 +54,7 @@ export default async (req: express.Request, res: express.Response) => {
                 for(let i = 0; i < numSessions; i++) {
                     let monthToCheck = initialDate.getMonth() + i;
                     let yearToCheck = initialDate.getFullYear();
-                    if (monthToCheck > 11) {
+                    while (monthToCheck > 11) {
                         monthToCheck -= 12;
                         yearToCheck += 1;
                     }
@@ -91,6 +90,7 @@ export default async (req: express.Request, res: express.Response) => {
         };
 
         return res.status(200).json(response);
+
     }).catch ((err: any) => {
         const response: RestResponse = {
             status: 'fail',
